@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FreshDevise</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="<%= controller.controller_name %> <%= controller.action_name %>">
+
+  <div class="container">
+    <% if user_signed_in? %>
+      <div class="header">
+        <%# if current_user.admin? %>
+          <%# link_to "Admin", "/admin" %>
+        <%# end %>
+
+        <strong><%= current_user.email %></strong>&nbsp;&nbsp;
+        <%# link_to "Settings", settings_path %>
+        <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+      </div>
+    <% else %>
+      <div class="header">
+        <% unless controller.controller_name == "pages" && controller.action_name == "index" %>
+          <%= link_to "Home", root_path %>
+        <% end %>
+
+        <% unless current_user %>
+          <a href="/users/login">Log In</a>
+        <% end %>
+      </div>
+    <% end %>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <%= yield %>
+  </div>
+</body>
+</html>
